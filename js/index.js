@@ -12,7 +12,7 @@ class Paddle {
         this.w = img.width
         this.h = img.height
         this.canvasW = w
-        this.speed = 10
+        this.speed = 5
         this.timeOut = 0
     }
 
@@ -45,21 +45,21 @@ class Ball {
         this.w = img.width
         this.h = img.height
         this.canvasW = w
-        this.speedX = 10
-        this.speedY = 10
+        this.speedX = 5
+        this.speedY = 5
         this.isCarsh = false
         this.draw = false
         window.addEventListener('mousedown', event => {
-            const x = event.x * 1.5 - this.w / 2
-            const y = event.y * 1.5 - this.h / 2
+            const x = event.offsetX * 1.5 - this.w / 2 // 乘1.5是canvas内部坐标是样式大小的转换比例
+            const y = event.offsetY * 1.5 - this.h / 2
             if (this.x + 5 > x && this.x - 5 < x && this.y + 5 > y && this.y - 5 < y) {
                 this.draw = true
                 console.log(this.draw)
             }
         })
         window.addEventListener('mousemove', event => {
-            const x = event.x * 1.5 - this.w / 2
-            const y = event.y * 1.5 - this.h / 2
+            const x = event.offsetX * 1.5 - this.w / 2
+            const y = event.offsetY * 1.5 - this.h / 2
             if (this.draw) {
                 this.x = x
                 this.y = y
@@ -282,14 +282,8 @@ class Draw {
             this.ball.move()
         }
         this.drawText()
-        // setTimeout(() => {
-        //     this.render()
-        // }, 1000 / window.fps)
         this.timeOut = requestAnimationFrame(() => {
             this.render()
         })
     }
 }
-// window.fps = 60
-
-// // 添加一个暂停功能

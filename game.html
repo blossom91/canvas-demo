@@ -19,21 +19,31 @@
             display: block;
             width: 400px;
             height: 500px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+        }
+
+        .input-list {
+            margin: auto;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
     <canvas id='game' width="600" height="750"></canvas>
-    <label for="">挡板速度</label>
-    <input type="range" data-name="paddle" min='1' max='20'>
-    <br/>
-    <label for="">小球速度</label>
-    <input type="range" data-name="ball" min='1' max='20'>
-    <br/>
-    <label for="">点击键盘1234选关卡</label>
-    <br/>
-    <label for="">点击P暂停后可拖动小球</label>
+    <div class="input-list">
+        <label for="">挡板速度</label>
+        <input type="range" data-name="paddle" min='1' max='20' value="5">
+        <br/>
+        <label for="">小球速度</label>
+        <input type="range" data-name="ball" min='1' max='20' value="5">
+        <br/>
+        <label for="">点击c重新开始,点击键盘1234选关卡</label>
+        <br/>
+        <label for="">点击P暂停后可拖动小球</label>
+    </div>
     <script src="./js/level.js"></script>
     <script src="./js/index.js"></script>
     <script>
@@ -44,6 +54,7 @@
                 paddle: 'img/paddle.png',
             }
             const draw = new Draw(images)
+
             draw.registerAction('a', () => {
                 if (draw.play) {
                     draw.paddle.moveLeft()
