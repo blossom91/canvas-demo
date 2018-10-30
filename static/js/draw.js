@@ -94,6 +94,7 @@ class Scene {
     }
 
     changeLevel(level) {
+        this.level = level
         const nowBlocks = blocks[this.level - 1]
         const arr = []
         if (nowBlocks && nowBlocks.length) {
@@ -103,9 +104,6 @@ class Scene {
                 const block = new Block(img.img, e)
                 arr.push(block)
             }
-            this.level = level
-        } else {
-            alert('没有这一关')
         }
         this.blocks = arr
     }
