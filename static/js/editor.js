@@ -70,14 +70,9 @@ class Editor {
                 let y1 = e.y
                 let x2 = e.x + this.block.w
                 let y2 = e.y + this.block.h
-                console.log(x, y, x1, y1, x2, y2)
-                if (x >= x1 && x <= x2 && y >= y1 && y <= y2) {
-                    console.log('砖块重叠了,不能添加')
-                    isPush = false
-                }
                 let x3 = x + this.block.w
                 let y3 = y + this.block.h
-                if (e.x >= x && e.x <= x3 && e.y >= y && e.y <= y3) {
+                if ((x >= x1 && x <= x2 && y >= y1 && y <= y2) || (e.x >= x && e.x <= x3 && e.y >= y && e.y <= y3)) {
                     console.log('砖块重叠了,不能添加')
                     isPush = false
                 }
@@ -89,12 +84,8 @@ class Editor {
                     life: parseInt(this.life),
                 })
                 if (!this.updateLevel.includes(this.level)) {
-                    if (this.level != 1 || this.level != 2 || this.level != 3) {
-                        this.updateLevel.push(this.level)
-                    }
+                    this.updateLevel.push(this.level)
                 }
-                console.log('now', blocks[this.level - 1])
-                console.log('this.back', this.backArr)
             }
         })
     }
@@ -104,7 +95,6 @@ class Editor {
         contain.style.display = 'none'
         // 有新的关卡更改关卡文本
         if (bool) {
-            console.log(this.updateLevel)
             let text = e('.level')
             this.updateLevel.forEach((e, index) => {
                 if (text.innerText.includes(e)) {
