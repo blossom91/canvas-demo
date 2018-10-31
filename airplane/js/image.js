@@ -1,5 +1,6 @@
 class GameImage {
     constructor(game, name) {
+        this.game = game
         this.image = game.imageByName(name)
         this.x = 0
         this.y = 0
