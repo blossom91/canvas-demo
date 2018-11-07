@@ -1,7 +1,9 @@
+// 打飞机完成版（包含双方子弹碰撞、敌机碰撞、爆炸效果）
 const config = {
-    bullet_speed: 1,
-    player_speed: 1,
-    enemy_speed: 1,
+    bullet_speed: 5,
+    player_speed: 5,
+    enemy_speed: 2,
+    bullet_interval: 6,
 }
 
 const e = selector => document.querySelector(selector)
@@ -21,10 +23,14 @@ const render = function(params) {
     let html = ''
     const arr = Object.keys(config)
     arr.forEach(item => {
+        let max = 10
+        if (item == 'bullet_interval') {
+            max = 30
+        }
         html += `
         <label for="">
         ${item}
-        <input type="range" max='10'  value="${config[item]}" data-speed="${item}">
+        <input type="range" max='${max}'  value="${config[item]}" data-speed="${item}">
         <span>${config[item]}</span>
         </label>
         `
@@ -51,6 +57,7 @@ const __main = () => {
         enemy1: './airplane/img/enemy1.png',
         enemy2: './airplane/img/enemy2.png',
         bullet: './airplane/img/bullet.png',
+        spark: './airplane/img/bullet1.png',
     }
     render()
     speedBind()

@@ -24,7 +24,7 @@ class Player extends GameImage {
         this.setup()
     }
     setup() {
-        this.cooldown = 7
+        this.cooldown = config.bullet_interval
     }
     update() {
         if (this.cooldown > 0) {
@@ -33,8 +33,9 @@ class Player extends GameImage {
     }
 
     fire(scene) {
+        console.log(this.cooldown)
         if (this.cooldown == 0) {
-            this.cooldown = 7
+            this.cooldown = config.bullet_interval
             let x = this.x + this.w / 2 - 10
             let y = this.y - 15
             let bullet = new Bullet(this.game, x, y)
@@ -68,7 +69,12 @@ class Player extends GameImage {
 
 class Enemy extends GameImage {
     constructor(game) {
-        const name = 'enemy' + random(0, 2)
+        let num = random(0, 2) // 降低大型飞机的出现概率
+        if (num == 2) {
+            num = random(0, 2)
+            num = random(0, 2)
+        }
+        const name = 'enemy' + num
         super(game, name)
         this.setup()
     }
@@ -93,7 +99,7 @@ class SceneMain extends BaseScene {
     setup() {
         this.bg = new GameImage(this.game, 'bg')
         this.addElement(this.bg)
-        this.enemyNum = 5
+        this.enemyNum = 8
 
         this.player = new Player(this.game)
         this.player.x = 200
