@@ -3,12 +3,19 @@ const random = (start, end) => {
     return Math.floor(num + start)
 }
 
+const isCrash = (rect1, rect2) =>
+    rect1.x < rect2.x + rect2.w &&
+    rect1.x + rect1.w > rect2.x &&
+    rect1.y < rect2.y + rect2.h &&
+    rect1.h + rect1.y > rect2.y
+
 class Bullet extends GameImage {
     constructor(game, x, y) {
         super(game, 'bullet')
         this.setup(x, y)
     }
     setup(x, y) {
+        this.id = 'bullet'
         this.x = x
         this.y = y
         this.speed = config.bullet_speed
@@ -18,12 +25,29 @@ class Bullet extends GameImage {
     }
 }
 
+class EnemyBullet extends GameImage {
+    constructor(game, x, y) {
+        super(game, 'bullet2')
+        this.setup(x, y)
+    }
+    setup(x, y) {
+        this.id = 'bullet2'
+        this.x = x
+        this.y = y
+        this.speed = config.enemy_bullet_speed
+    }
+    update() {
+        this.y += this.speed
+    }
+}
+
 class Player extends GameImage {
     constructor(game) {
         super(game, 'player')
         this.setup()
     }
     setup() {
+        this.id = 'player'
         this.cooldown = config.bullet_interval
     }
     update() {
@@ -31,9 +55,7 @@ class Player extends GameImage {
             this.cooldown--
         }
     }
-
     fire(scene) {
-        console.log(this.cooldown)
         if (this.cooldown == 0) {
             this.cooldown = config.bullet_interval
             let x = this.x + this.w / 2 - 10
@@ -50,9 +72,7 @@ class Player extends GameImage {
     }
     moveRight() {
         if (this.x + this.w < this.game.canvas.width) {
-            console.log(config.player_speed)
             this.x += config.player_speed
-            console.log(this.x)
         }
     }
     moveUp() {
@@ -68,7 +88,7 @@ class Player extends GameImage {
 }
 
 class Enemy extends GameImage {
-    constructor(game) {
+    constructor(game, scene) {
         let num = random(0, 2) // 降低大型飞机的出现概率
         if (num == 2) {
             num = random(0, 2)
@@ -76,13 +96,30 @@ class Enemy extends GameImage {
         }
         const name = 'enemy' + num
         super(game, name)
+        this.scene = scene
+        this.life = num + 1
+        this.id = 'enemy'
         this.setup()
     }
     setup() {
         this.y = -random(0, 300)
         this.x = random(0, 480 - this.w)
+        this.cooldown = 100
+    }
+    fire() {
+        if (this.cooldown == 0) {
+            this.cooldown = 100
+            let x = this.x + this.w / 2 - 10
+            let y = this.y - 15
+            let bullet = new EnemyBullet(this.game, x, y)
+            this.scene.addElement(bullet)
+        }
     }
     update() {
+        if (this.cooldown > 0) {
+            this.cooldown--
+        }
+        this.fire()
         if (this.y > this.game.canvas.height) {
             this.setup()
         } else {
@@ -100,7 +137,7 @@ class SceneMain extends BaseScene {
         this.bg = new GameImage(this.game, 'bg')
         this.addElement(this.bg)
         this.enemyNum = 8
-
+        this.nowEnemyNum = 0
         this.player = new Player(this.game)
         this.player.x = 200
         this.player.y = 700
@@ -123,16 +160,20 @@ class SceneMain extends BaseScene {
         })
     }
     addEnemies() {
-        let arr = []
+        let arr = 0
         for (let i = 0; i < this.enemyNum; i++) {
-            let e = new Enemy(this.game)
+            let e = new Enemy(this.game, this)
             this.addElement(e)
-            arr.push(e)
+            this.nowEnemyNum++
         }
-        this.enemies = arr
     }
-    // draw() {
-    //     this.game.drawImage(this.bg)
-    //     this.game.drawImage(this.player)
-    // }
+
+    update() {
+        super.update()
+        if (this.nowEnemyNum < this.enemyNum) {
+            let e = new Enemy(this.game, this)
+            this.addElement(e)
+            this.nowEnemyNum++
+        }
+    }
 }

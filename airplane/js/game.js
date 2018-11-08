@@ -25,6 +25,10 @@ class Game {
     drawImage(img) {
         this.context.drawImage(img.image, img.x, img.y)
     }
+    drawText(text, x, y) {
+        this.context.font = '50px serif'
+        this.context.fillText(text, x, y)
+    }
     // update
     update() {
         this.scene.update()

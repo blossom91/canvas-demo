@@ -1,9 +1,12 @@
 // 打飞机完成版（包含双方子弹碰撞、敌机碰撞、爆炸效果）
 const config = {
-    bullet_speed: 5,
     player_speed: 5,
+    bullet_speed: 5,
     enemy_speed: 2,
+    enemy_bullet_speed: 5,
     bullet_interval: 6,
+    enemy_interval: 100,
+    bomb_time: 20,
 }
 
 const e = selector => document.querySelector(selector)
@@ -26,6 +29,9 @@ const render = function(params) {
         let max = 10
         if (item == 'bullet_interval') {
             max = 30
+        }
+        if (item == 'bomb_time') {
+            max = 100
         }
         html += `
         <label for="">
@@ -57,12 +63,14 @@ const __main = () => {
         enemy1: './airplane/img/enemy1.png',
         enemy2: './airplane/img/enemy2.png',
         bullet: './airplane/img/bullet.png',
+        bullet2: './airplane/img/bullet2.png',
         spark: './airplane/img/bullet1.png',
     }
     render()
     speedBind()
     let game = new Game(images, g => {
         let s = new SceneMain(g)
+        // let s = new SceneTitle(g)
         g.runWithScene(s)
     })
 }
