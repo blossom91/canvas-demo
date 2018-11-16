@@ -1,61 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>game</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>game</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
+            #game {
+                display: block;
+                width: 480px;
+                height: 850px;
+                margin: 0 auto;
+                border: 1px solid #eee;
+                box-sizing: border-box;
+                margin-top: 100px;
+            }
 
-        #game {
-            display: block;
-            width: 480px;
-            height: 850px;
-            margin: 0 auto;
-            border: 1px solid #eee;
-            box-sizing: border-box;
-            margin-top: 100px;
-        }
+            .input-list {
+                margin: auto;
+                text-align: center;
+            }
 
-        .input-list {
-            margin: auto;
-            text-align: center;
-        }
+            label {
+                display: block;
+                margin-top: 5px;
+            }
 
-        label {
-            display: block;
-            margin-top: 5px;
-        }
+            .editor-input {
+                width: 30px;
+            }
 
+            .editor-contain {
+                display: none;
+            }
+        </style>
+    </head>
 
-        .editor-input {
-            width: 30px;
-        }
-
-        .editor-contain {
-            display: none;
-        }
-    </style>
-</head>
-
-<body>
-    <canvas id='game' width="480" height="850"></canvas>
-    <div class="input-list"></div>
-    <script src="./airplane/js/game.js"></script>
-    <script src="./airplane/js/image.js"></script>
-    <script src="./airplane/js/base_scene.js"></script>
-    <script src="./airplane/js/main_scene.js"></script>
-    <script src="./airplane/js/title_scene.js"></script>
-    <script src="./airplane/js/index.js"></script>
-</body>
-
+    <body>
+        <canvas id="game" width="480" height="850"></canvas>
+        <div class="input-list"><span>按p暂停更改设置</span></div>
+        <script src="./airplane/js/util.js"></script>
+        <script src="./airplane/js/game.js"></script>
+        <script src="./airplane/js/image.js"></script>
+        <script src="./airplane/js/base_scene.js"></script>
+        <script src="./airplane/js/main_scene.js"></script>
+        <script src="./airplane/js/title_scene.js"></script>
+        <script src="./airplane/js/spirit.js"></script>
+        <script src="./airplane/js/index.js"></script>
+    </body>
 </html>

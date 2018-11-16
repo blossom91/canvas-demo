@@ -9,19 +9,6 @@ const config = {
     bomb_time: 20,
 }
 
-const e = selector => document.querySelector(selector)
-
-const bindEvent = (element, eventName, callback) => {
-    element.addEventListener(eventName, callback)
-}
-
-const bindAll = (selector, eventName, callback) => {
-    let elements = document.querySelectorAll(selector)
-    for (let i = 0; i < elements.length; i++) {
-        let e = elements[i]
-        bindEvent(e, eventName, callback)
-    }
-}
 const render = function(params) {
     let html = ''
     const arr = Object.keys(config)
@@ -69,7 +56,6 @@ const __main = () => {
     render()
     speedBind()
     let game = new Game(images, g => {
-        // let s = new SceneMain(g)
         let s = new SceneTitle(g)
         g.runWithScene(s)
     })

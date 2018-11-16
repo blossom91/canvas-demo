@@ -3,6 +3,7 @@ class BaseScene {
         this.game = game
         this.score = 0
         this.elements = []
+        this.play = true
     }
     draw() {
         for (let i = 0; i < this.elements.length; i++) {
@@ -26,6 +27,7 @@ class BaseScene {
         }
     }
     update() {
+        if (!this.play) return
         for (let i = 0; i < this.elements.length; i++) {
             const e = this.elements[i]
             e.update()
