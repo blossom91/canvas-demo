@@ -29,6 +29,10 @@ class Game {
         this.context.font = '50px serif'
         this.context.fillText(text, x, y)
     }
+    drawScore(text, x, y) {
+        this.context.font = '20px serif'
+        this.context.fillText('分数:' + text, 380, 20)
+    }
     // update
     update() {
         this.scene.update()

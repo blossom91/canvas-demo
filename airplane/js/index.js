@@ -69,8 +69,8 @@ const __main = () => {
     render()
     speedBind()
     let game = new Game(images, g => {
-        let s = new SceneMain(g)
-        // let s = new SceneTitle(g)
+        // let s = new SceneMain(g)
+        let s = new SceneTitle(g)
         g.runWithScene(s)
     })
 }

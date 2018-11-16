@@ -67,6 +67,7 @@ class Player extends GameImage {
 
     moveLeft() {
         if (this.x > 0) {
+            console.log('config.player_speed', config.player_speed)
             this.x -= config.player_speed
         }
     }
@@ -96,6 +97,7 @@ class Enemy extends GameImage {
         }
         const name = 'enemy' + num
         super(game, name)
+        this.addScore = num + 1
         this.scene = scene
         this.life = num + 1
         this.id = 'enemy'
@@ -174,6 +176,69 @@ class SceneMain extends BaseScene {
             let e = new Enemy(this.game, this)
             this.addElement(e)
             this.nowEnemyNum++
+        }
+    }
+}
+
+class Spark extends GameImage {
+    constructor(game, x, y) {
+        super(game, 'spark')
+        this.setup(x, y)
+    }
+    setup(x, y) {
+        this.x = x
+        this.y = y
+        this.vx = random(-1, 1)
+        this.vy = random(-1, 1)
+        this.life = 10
+    }
+    update() {
+        this.life--
+        this.x += this.vx
+        this.y += this.vy
+    }
+    draw() {
+        this.game.context.drawImage(this.image, this.x, this.y, 6, 6)
+    }
+}
+
+class Bomb {
+    constructor(game, x, y, scene) {
+        this.scene = scene
+        this.game = game
+        this.setup(x, y)
+    }
+    setup(x, y) {
+        this.id = new Date().getTime()
+        this.x = x
+        this.y = y
+        this.sparkArr = []
+        this.sparkNum = 30
+        this.life = config.bomb_time
+    }
+
+    update() {
+        this.life--
+        if (this.life < 0) {
+            this.scene.removeElement(this)
+        }
+        if (this.sparkArr.length < this.sparkNum) {
+            const e = new Spark(this.game, this.x, this.y)
+            this.sparkArr.push(e)
+        }
+        for (let i = 0; i < this.sparkArr.length; i++) {
+            const e = this.sparkArr[i]
+            e.update()
+            if (e.life < 0) {
+                this.sparkArr.splice(i, 1)
+            }
+        }
+    }
+
+    draw() {
+        for (let i = 0; i < this.sparkArr.length; i++) {
+            const e = this.sparkArr[i]
+            e.draw()
         }
     }
 }

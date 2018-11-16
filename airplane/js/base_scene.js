@@ -1,6 +1,7 @@
 class BaseScene {
     constructor(game) {
         this.game = game
+        this.score = 0
         this.elements = []
     }
     draw() {
@@ -8,6 +9,7 @@ class BaseScene {
             const e = this.elements[i]
             e.draw()
         }
+        this.game.drawScore(this.score)
     }
     addElement(img) {
         if (img instanceof Array) {
@@ -78,9 +80,12 @@ class BaseScene {
                     this.addElement(bomb)
                 }
                 if (e.id == 'enemy') {
+                    this.score += e.addScore * 100
                     this.nowEnemyNum--
                 }
                 if (e.id == 'player') {
+                    let s = new SceneTitle(this.game, 2)
+                    this.game.replaceScene(s)
                     console.log('game end')
                 }
             }
