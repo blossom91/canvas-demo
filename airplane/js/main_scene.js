@@ -29,8 +29,13 @@ class SceneMain extends BaseScene {
             this.player.fire(this)
         })
         this.game.registerAction('p', () => {
-            console.log('play', this.play)
+            if (this.wait) return
+            this.wait = true
             this.play = !this.play
+            setTimeout(() => {
+                this.wait = false
+            }, 300)
+            console.log('play', this.play)
         })
     }
     addEnemies() {
