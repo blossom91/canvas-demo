@@ -1,85 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>game</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>game</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
+            #game {
+                display: block;
+                width: 288px;
+                height: 512px;
+                margin: 0 auto;
+                border: 1px solid #eee;
+                box-sizing: border-box;
+            }
 
-        #game {
-            display: block;
-            width: 400px;
-            height: 500px;
-            margin: 0 auto;
-            border: 1px solid #eee;
-            box-sizing: border-box;
-        }
+            .input-list {
+                margin: auto;
+                text-align: center;
+            }
 
-        .input-list {
-            margin: auto;
-            text-align: center;
-        }
+            label {
+                display: block;
+                margin-top: 5px;
+            }
 
-        .editor-input {
-            width: 30px;
-        }
+            .editor-input {
+                width: 30px;
+            }
 
-        .editor-contain {
-            display: none;
-        }
-    </style>
-</head>
+            .editor-contain {
+                display: none;
+            }
+        </style>
+    </head>
 
-<body>
-    <canvas id='game' width="600" height="750"></canvas>
-    <div class="input-list">
-        <label for="">挡板速度</label>
-        <input class='change-input' type="range" data-name="paddle" min='1' max='20' value="5">
-        <br/>
-        <label for="">小球速度</label>
-        <input class='change-input' type="range" data-name="ball" min='1' max='20' value="5">
-        <br/>
-        <label for="">点击c重新开始,点击键盘
-            <span class='level'>123</span>
-            选关卡</label>
-        <br/>
-        <label for="">点击P暂停后可拖动小球</label>
-        <br/>
-        <div class="editor">
-            <button id='editor-btn'>关卡编辑</button>
-            <br/>
-            <div class="editor-contain">
-                <label for="">关卡</label>
-                <input class="editor-input" type="number" min='4' max='9' value="4">
-                <label for="">砖块生命</label>
-                <select id='life-select'>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <br/>
-                <button class="btn-cancel">取消</button>
-                <button class="btn-complete">完成</button>
-            </div>
-        </div>
-    </div>
-    <script src="./brick/js/level.js"></script>
-    <script src="./brick/js/util.js"></script>
-    <script src="./brick/js/ball.js"></script>
-    <script src="./brick/js/block.js"></script>
-    <script src="./brick/js/paddle.js"></script>
-    <script src="./brick/js/draw.js"></script>
-    <script src="./brick/js/editor.js"></script>
-    <script src="./brick/js/index.js"></script>
-</body>
-
+    <body>
+        <canvas id="game" width="288" height="512"></canvas>
+        <div class="input-list"><span>按k开始游戏按/p暂停更改设置</span></div>
+        <script src="./bird/js/util.js"></script>
+        <script src="./bird/js/game.js"></script>
+        <script src="./bird/js/image.js"></script>
+        <script src="./bird/js/base_scene.js"></script>
+        <script src="./bird/js/main_scene.js"></script>
+        <script src="./bird/js/title_scene.js"></script>
+        <script src="./bird/js/spirit.js"></script>
+        <script src="./bird/js/index.js"></script>
+    </body>
 </html>

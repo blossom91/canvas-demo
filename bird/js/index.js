@@ -1,52 +1,74 @@
-const createDraw = () => {
-    let images = {
-        ball: './static/img/ball.png',
-        block: './static/img/block.png',
-        paddle: './static/img/paddle.png',
-    }
-    const draw = new Scene(images)
+// 小鸟完整版本（包含完整游戏功能和标题、结束场景）
+// 1.循环移动的地面
+// 2.小鸟正常移动
+// 3.管子处理
+const config = {
+    pipe_X: 250,
+    pipe_Y: 150,
+    pipe_Up: 270,
+    bird_speed: 5,
+    jump_height: 5,
+}
 
-    draw.registerAction('a', () => {
-        if (draw.play) {
-            draw.paddle.moveLeft()
+const render = function(params) {
+    let html = ''
+    const arr = Object.keys(config)
+    arr.forEach(item => {
+        let max = 10
+        let min = 1
+        if (item == 'pipe_Up') {
+            max = 300
+            min = 200
         }
+        if (item == 'pipe_X') {
+            max = 300
+            min = 200
+        }
+        if (item == 'pipe_Y') {
+            max = 200
+            min = 100
+        }
+        html += `
+        <label for="">
+        ${item}
+        <input type="range" max='${max}'  min='${min}'  value="${config[item]}" data-speed="${item}">
+        <span>${config[item]}</span>
+        </label>
+        `
     })
-    draw.registerAction('d', () => {
-        if (draw.play) {
-            draw.paddle.moveRight()
-        }
-    })
-    window.addEventListener('keydown', event => {
-        if (event.key == 'p') {
-            if (!draw.gameStart) {
-                draw.gameStart = true
-            }
-            draw.play = !draw.play
-        }
-        if (event.key == 'c') {
-            cancelAnimationFrame(draw.timeOut)
-            draw.end = false
-            draw.play = true
-            draw.start()
-        }
-        if ('123456789'.includes(event.key)) {
-            draw.changeLevel(event.key)
-        }
-    })
-    return draw
+    const dom = e('.input-list')
+    dom.insertAdjacentHTML('beforeend', html)
 }
-const hanldeSpeed = draw => {
-    const inputs = document.querySelectorAll('.change-input')
-    inputs.forEach(e => {
-        const key = e.dataset.name
-        bindEvent(e, 'input', event => {
-            draw[key].changeSpeed(Number(event.target.value))
-        })
+
+const speedBind = () => {
+    bindAll('input', 'input', event => {
+        const target = event.target
+        const data = target.dataset.speed
+        config[data] = parseInt(target.value)
+        const span = target.parentElement.children[1]
+        span.innerText = target.value
     })
 }
+
 const __main = () => {
-    const draw = createDraw()
-    hanldeSpeed(draw)
-    draw.init()
+    let images = {
+        bg: './bird/img/bg_day.png',
+        bird0: './bird/img/bird0_0.png',
+        bird1: './bird/img/bird0_1.png',
+        bird2: './bird/img/bird0_2.png',
+        pipe: './bird/img/pipe_up.png',
+        land: './bird/img/land.png',
+        title: './bird/img/title.png',
+        ready: './bird/img/text_ready.png',
+        end: './bird/img/text_game_over.png',
+    }
+    render()
+    speedBind()
+    let game = new Game(images, g => {
+        let s = new SceneTitle(g)
+        // let s = new SceneMain(g)
+
+        g.runWithScene(s)
+    })
 }
 __main()
